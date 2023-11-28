@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Giacomo C</Authors>
+    <Description>.NET library for the Toggl API</Description>
+    <Copyright>2023 © Giacomo C</Copyright>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyTitle>TogglSdk</AssemblyTitle>
+    <AssemblyName>TogglSdk</AssemblyName>
+    <PackageId>TogglSdk</PackageId>
+    <PackageProjectUrl>https://github.com/giacomo-cc/TogglSdkDotNet</PackageProjectUrl>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/giacomo-cc/TogglSdkDotNet</RepositoryUrl>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+</Project>
