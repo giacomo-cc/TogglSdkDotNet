@@ -1,7 +1,11 @@
-using System;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using TogglTrackSdk.Client;
 using TogglTrackSdk.Client.AuthConfiguration;
-using TogglTrackSdk.Client.TimeEntryClient;
+using TogglTrackSdk.Model;
 
 namespace ToggSdk.ManualTest
 {
@@ -10,14 +14,28 @@ namespace ToggSdk.ManualTest
 
         private static async Task Main(string[] args)
         {
-            var apiToken = "YOUR API KEY HERE";
-            var client = new TimeEntryClient(new ApiTokenClientConfiguration(apiToken));
 
+            // right click on the project TogglTrackSdk.ManualTest and click "Manage User Secrets"
+            // create a secret json like the following:
+            // {
+            //      "apiToken": "YOUR_API_KEY"
+            // }
 
-            var res = await client.GetCurrentTimeEntry();
+            var config = new ConfigurationBuilder().AddUserSecrets<UserSecretsPoco>().Build();
+            var secretProvider = config.Providers.First();
+            secretProvider.TryGet("apiToken", out var apiToken);
 
-            Console.WriteLine("result:");
-            Console.WriteLine(res);
+            // 
+
+            var timeEntryClient = new TogglTrackClient(new ApiTokenClientConfiguration(apiToken));
+            var me = await timeEntryClient.GetMe(false);
+
+            Console.WriteLine(me.Id);
+        }
+
+        class UserSecretsPoco
+        {
+            public string ApiToken { get; set; }
         }
     }
 }
