@@ -10,7 +10,7 @@ public class TogglTrackClient
 {
     protected readonly HttpClient httpClient;
 
-    private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+    protected readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
     {
         ContractResolver = new DefaultContractResolver
         {

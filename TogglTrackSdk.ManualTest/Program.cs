@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using TogglTrackSdk.Client.AuthConfiguration;
-using TogglTrackSdk.Client.TimeEntry;
+using TogglTrackSdk.Client.TimeEntryClient;
 
 namespace ToggSdk.ManualTest
 {
