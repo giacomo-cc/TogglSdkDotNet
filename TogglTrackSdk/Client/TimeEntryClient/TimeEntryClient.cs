@@ -1,7 +1,12 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TogglTrackSdk.Client.AuthConfiguration;
 using TogglTrackSdk.Model;
 using ToggSdk.Exceptions;
@@ -15,29 +20,25 @@ public class TimeEntryClient : TogglTrackClient
     {
     }
 
+    // GET CurrentTimeEntry
+    public Task<TimeEntry> GetCurrentTimeEntry()
+        => GenericRequest<TimeEntry>(HttpMethod.Get, "https://api.track.toggl.com/api/v9/me/time_entries/current");
+
     // GET TimeEntries
-    public async Task<TimeEntry> GetCurrentTimeEntry()
+    public Task<TimeEntry[]> GetTimeEntries()
+        => GenericRequest<TimeEntry[]>(HttpMethod.Get, "https://api.track.toggl.com/api/v9/me/time_entries");
+    public Task<TimeEntry[]> GetTimeEntries(DateTime startDate, DateTime endDate)
     {
-        string url = "https://api.track.toggl.com/api/v9/me/time_entries/current";
-
-        var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, url));
-        if (response.StatusCode == (HttpStatusCode)429)
+        var queryParams = new NameValueCollection
         {
-            LogManager.Instance.Info("Rate limited request, pausing before retrying");
-            throw new TogglApiException("Rate limited request, pausing before retrying");
-        }
+            { "start_date", XmlConvert.ToString(startDate, XmlDateTimeSerializationMode.Local) },
+            { "end_date", XmlConvert.ToString(endDate, XmlDateTimeSerializationMode.Local) }
+        };
 
-        if (response.IsSuccessStatusCode)
-        {
-            LogManager.Instance.Debug($"Request to url {url} was a success with status code {response.StatusCode}");
-
-            var responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TimeEntry>(responseBody, _jsonSerializerSettings);
-            //return await response.Content.ReadAsStringAsync();
-        }
-        else
-        {
-            throw new TogglApiException($"Request to url {url} failed with status code {response.StatusCode}");
-        }
+        return GenericRequest<TimeEntry[]>(HttpMethod.Get, "https://api.track.toggl.com/api/v9/me/time_entries", queryParams);
     }
+
+    // POST TimeEntries
+    public Task<TimeEntry> PostTimeEntry(long workspaceId, CreatingTimeEntry timeEntry)
+        => GenericRequest<TimeEntry, CreatingTimeEntry>(HttpMethod.Post, $"https://api.track.toggl.com/api/v9/workspaces/{workspaceId}/time_entries", timeEntry);
 }
