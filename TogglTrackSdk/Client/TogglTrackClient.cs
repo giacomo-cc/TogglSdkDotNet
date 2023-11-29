@@ -16,11 +16,11 @@ using ToggSdk.Logging;
 
 namespace TogglTrackSdk.Client;
 
-public class TogglTrackClient
+public partial class TogglTrackClient
 {
-    protected readonly HttpClient httpClient;
+    private readonly HttpClient _httpClient;
 
-    protected readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+    private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
     {
         ContractResolver = new DefaultContractResolver
         {
@@ -36,19 +36,19 @@ public class TogglTrackClient
 
     public TogglTrackClient(IClientConfiguration clientConfiguration)
     {
-        httpClient = new HttpClient();
-        httpClient.DefaultRequestHeaders.Accept.Clear();
-        httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", clientConfiguration.GetAuthorizationToken());
-        httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _httpClient = new HttpClient();
+        _httpClient.DefaultRequestHeaders.Accept.Clear();
+        _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", clientConfiguration.GetAuthorizationToken());
+        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-    protected Task<T> GenericRequest<T, K>(HttpMethod method, string url, K payload, NameValueCollection queryParams = null)
+    private Task<T> GenericRequest<T, K>(HttpMethod method, string url, K payload, NameValueCollection queryParams = null)
     {
         var serializedPayload = JsonConvert.SerializeObject(payload, _jsonSerializerSettings);
         return GenericRequest<T>(method, url, queryParams, payload: serializedPayload);
     }
 
-    protected async Task<T> GenericRequest<T>(HttpMethod method, string url, NameValueCollection queryParams = null, string payload = null)
+    private async Task<T> GenericRequest<T>(HttpMethod method, string url, NameValueCollection queryParams = null, string payload = null)
     {
         var uriBuilder = new UriBuilder(url);
         var query = HttpUtility.ParseQueryString(uriBuilder.Query);
@@ -65,7 +65,7 @@ public class TogglTrackClient
         if (payload != null)
             request.Content = new StringContent(payload);
 
-        var response = await httpClient.SendAsync(request);
+        var response = await _httpClient.SendAsync(request);
 
         if (response.StatusCode == (HttpStatusCode)429)
         {

@@ -12,14 +12,10 @@ using TogglTrackSdk.Model;
 using ToggSdk.Exceptions;
 using ToggSdk.Logging;
 
-namespace TogglTrackSdk.Client.TimeEntryClient;
+namespace TogglTrackSdk.Client;
 
-public class TimeEntryClient : TogglTrackClient
+public partial class TogglTrackClient
 {
-    public TimeEntryClient(IClientConfiguration clientConfig) : base(clientConfig)
-    {
-    }
-
     // GET CurrentTimeEntry
     public Task<TimeEntry> GetCurrentTimeEntry()
         => GenericRequest<TimeEntry>(HttpMethod.Get, "https://api.track.toggl.com/api/v9/me/time_entries/current");
