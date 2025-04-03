@@ -16,7 +16,8 @@
     <RepositoryUrl>https://github.com/giacomo-cc/TogglTrackSdk</RepositoryUrl>
     <LangVersion>latest</LangVersion>
     <PackageTags>sdk;dotnet;api;library</PackageTags>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression> <!-- or choose another -->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,10 @@
   <ItemGroup>
     <Folder Include="Client\MeClient\" />
     <Folder Include="Client\TimeEntryClient\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
