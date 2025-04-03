@@ -2,18 +2,21 @@
 
   <PropertyGroup>
     <Authors>Giacomo C</Authors>
-    <Description>.NET library for the Toggl API</Description>
+    <Company>byte3.it</Company>
+    <Description>.NET library for the Toggl Track API</Description>
     <Copyright>2023 © Giacomo C</Copyright>
-    <VersionPrefix>0.1.0</VersionPrefix>
+    <VersionPrefix>0.0.1</VersionPrefix>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyTitle>TogglSdk</AssemblyTitle>
-    <AssemblyName>TogglSdk</AssemblyName>
-    <PackageId>TogglSdk</PackageId>
-    <PackageProjectUrl>https://github.com/giacomo-cc/TogglSdkDotNet</PackageProjectUrl>
+    <AssemblyTitle>TogglTrackSdk</AssemblyTitle>
+    <AssemblyName>TogglTrackSdk</AssemblyName>
+    <PackageId>TogglTrackSdk</PackageId>
+    <PackageProjectUrl>https://github.com/giacomo-cc/TogglTrackSdk</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/giacomo-cc/TogglSdkDotNet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/giacomo-cc/TogglTrackSdk</RepositoryUrl>
     <LangVersion>latest</LangVersion>
+    <PackageTags>sdk;dotnet;api;library</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression> <!-- or choose another -->
   </PropertyGroup>
 
   <ItemGroup>
